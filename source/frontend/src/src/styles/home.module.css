@@ -29,3 +29,12 @@
 	margin-bottom: 24px;
 	text-align: center;
 }
+
+.tasks {
+	display: flex;
+	flex-direction: column;
+}
+
+.tasks .task {
+	width: 100%;
+}

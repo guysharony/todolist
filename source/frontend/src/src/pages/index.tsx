@@ -8,20 +8,22 @@ import styles from '../styles/home.module.css';
 const { Search } = Input;
 
 export default function TodosPage() {
-	const allTasks = trpc.todo.all.useQuery(undefined, {
-		staleTime: 3000,
+	const all = trpc.todo.all.useQuery(undefined, {
+		staleTime: 3000
 	});
 
 	const utils = trpc.useContext();
 
-	const addTask = trpc.todo.add.useMutation({
+	const add = trpc.todo.add.useMutation({
 		async onMutate({ text }) {
 			await utils.todo.all.cancel();
 
+			const tasks = all.data ?? [];
+
 			utils.todo.all.setData(undefined, [
+				...tasks,
 				{
 					id: `${Math.random()}`,
-					completed: false,
 					text,
 					createdAt: new Date(),
 				},
@@ -49,9 +51,18 @@ export default function TodosPage() {
 
 								if (!text.length) return;
 
-								addTask.mutate({ text });
+								add.mutate({ text });
 							}}
 						/>
+					</div>
+					<div className={styles.tasks}>
+						{
+							all.data?.map((task) => (
+								<div key={task.id} className={styles.task}>
+									<span>{task.text}</span>
+								</div>
+							))
+						}
 					</div>
 				</div>
 			</main>
