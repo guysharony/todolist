@@ -14,12 +14,25 @@
 .content {
 	max-width: 600px;
 	width: 100%;
+	max-height: calc(100vh - 8em);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	border: 1px #1777ff solid;
-	padding: 20px;
+	border: 1px #d8d8d8 solid;
+	padding: 20px 0;
 	border-radius: 10px;
+}
+
+.tasks,
+.search {
+	width: 100%;
+}
+
+.search {
+	width: calc(100% - 40px);
+	margin: 0 auto 16px;
+	padding-bottom: 16px;
+	border-bottom: 1px #575757 solid;
 }
 
 .title {
@@ -33,8 +46,22 @@
 .tasks {
 	display: flex;
 	flex-direction: column;
+	padding: 0 20px;
+	overflow: auto;
 }
 
 .tasks .task {
 	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.tasks .task > span {
+	font-size: 16px;
+	color: #000000a8;
+}
+
+.tasks .task:not(:last-child) {
+	margin-bottom: 16px;
 }

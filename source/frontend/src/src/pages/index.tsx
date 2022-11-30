@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Input } from 'antd';
+import { Button, Input } from 'antd';
 
 import { trpc } from '../utils/trpc';
 
@@ -7,7 +7,7 @@ import styles from '../styles/home.module.css';
 
 const { Search } = Input;
 
-export default function TodosPage() {
+export default function Home() {
 	const all = trpc.todo.all.useQuery(undefined, {
 		staleTime: 3000
 	});
@@ -30,6 +30,16 @@ export default function TodosPage() {
 			]);
 		},
 	});
+
+	const remove = trpc.todo.delete.useMutation({
+		async onMutate(id) {
+			await utils.todo.all.cancel();
+
+			const tasks = all.data ?? [];
+
+			utils.todo.all.setData(undefined, tasks.filter((task) => task.id != id));
+		}
+	})
 
 	return (
 		<div className={styles.container}>
@@ -60,6 +70,7 @@ export default function TodosPage() {
 							all.data?.map((task) => (
 								<div key={task.id} className={styles.task}>
 									<span>{task.text}</span>
+									<Button onClick={() => { remove.mutate(task.id); }}>Delete</Button>
 								</div>
 							))
 						}
