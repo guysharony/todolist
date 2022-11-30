@@ -30,9 +30,7 @@
 
 .search {
 	width: calc(100% - 40px);
-	margin: 0 auto 16px;
-	padding-bottom: 16px;
-	border-bottom: 1px #575757 solid;
+	margin: 0 auto;
 }
 
 .title {
@@ -46,8 +44,10 @@
 .tasks {
 	display: flex;
 	flex-direction: column;
-	padding: 0 20px;
+	padding: 16px 20px 0;
 	overflow: auto;
+	margin-top: 16px;
+	border-top: 1px #d8d8d8 solid;
 }
 
 .tasks .task {

@@ -41,6 +41,8 @@ export default function Home() {
 		}
 	})
 
+	const tasks = all.data ?? [];
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -65,16 +67,19 @@ export default function Home() {
 							}}
 						/>
 					</div>
-					<div className={styles.tasks}>
-						{
-							all.data?.map((task) => (
-								<div key={task.id} className={styles.task}>
-									<span>{task.text}</span>
-									<Button onClick={() => { remove.mutate(task.id); }}>Delete</Button>
-								</div>
-							))
-						}
-					</div>
+					{
+						tasks.length > 0 &&
+						<div className={styles.tasks}>
+							{
+								all.data?.map((task) => (
+									<div key={task.id} className={styles.task}>
+										<span>{task.text}</span>
+										<Button onClick={() => { remove.mutate(task.id); }}>Delete</Button>
+									</div>
+								))
+							}
+						</div>
+					}
 				</div>
 			</main>
 		</div>
